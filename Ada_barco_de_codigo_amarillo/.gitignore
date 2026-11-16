@@ -1,0 +1,9 @@
+.env
+certs/*.pem
+pgdata/
+*.dump
+*.sql.gz
+backups/
+node_modules/
+__pycache__/
+*.pyc*.zip

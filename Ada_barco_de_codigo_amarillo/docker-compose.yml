@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: app_db
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # Nota: SIN "ports" aquí. No necesita exponerse al host,
+    # solo la app le habla por la red interna "backend".
+
+  app:
+    build: ./app
+    container_name: app_backend
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend
+      - frontend
+    expose:
+      - "3000"   # puerto interno, no publicado al host
+
+  nginx:
+    image: nginx:alpine
+    container_name: app_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - app
+    networks:
+      - frontend
+
+networks:
+  backend:   # solo db <-> app
+  frontend:  # solo app <-> nginx
+
+volumes:
+  pgdata:
