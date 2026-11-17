@@ -1,0 +1,10 @@
+SELECT nombre, apellido1
+FROM alumno
+WHERE UPPER(LEFT(apellido1, 1)) BETWEEN 'C' AND 'T'
+ORDER BY apellido1, nombre;
+
+
+SELECT nombre, apellido1
+FROM persona
+WHERE tipo = 'alumno'
+  AND apellido1 REGEXP '^[C-T]';

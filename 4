@@ -1,0 +1,10 @@
+CREATE OR REPLACE VIEW v_becados_media_5_7 AS
+SELECT a.nombre, a.apellido1, ROUND(AVG(m.nota), 2) AS nota_media
+FROM alumno a
+JOIN matricula m ON m.idAlumno = a.idAlumno
+WHERE a.beca = 'SI'
+GROUP BY a.idAlumno, a.nombre, a.apellido1
+HAVING AVG(m.nota) BETWEEN 5 AND 7;
+
+
+SELECT * FROM v_becados_media_5_7;

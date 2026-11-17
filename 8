@@ -1,0 +1,6 @@
+USE Facultad;
+SELECT * FROM tlfContactoProf;
+
+mariadb-dump -u root -p Facultad tlfContactoProf --result-file=tlfContactoProf.sql
+
+cat tlfContactoProf.sql

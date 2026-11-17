@@ -1,0 +1,7 @@
+SELECT COUNT(*) AS total_profesores
+FROM profesor
+WHERE categoria NOT IN (
+    'Catedráticos de Universidad',
+    'Titulares Universidad',
+    'Catedráticos de Escuela Universitaria'
+);

@@ -1,0 +1,25 @@
+DELIMITER //
+
+CREATE TRIGGER trg_catedratico_telefono
+AFTER INSERT ON profesor
+FOR EACH ROW
+BEGIN
+    IF NEW.categoria = 'Catedráticos de Universidad' THEN
+        INSERT INTO tlfContactoProf (idProfesor, telefono)
+        VALUES (NEW.idProfesor, 999999999);
+    END IF;
+END//
+
+DELIMITER ;
+
+
+SELECT * FROM tlfContactoProf WHERE idProfesor = 'PR049';
+
+INSERT INTO profesor VALUES
+('PR049','22641246Q','Manuel Luis','Lahoz','Pérez','manuel.luis.lahoz.perez@ucm.com','Calle Valdivia, 10',28045,'Madrid','Madrid','Catedráticos de Universidad');
+
+
+INSERT INTO profesor VALUES
+('PR051','48265917M','Pilar','Górriz','Navarro','pilar.gorriz.navarro@unizar.com','Paseo Independencia 12',50004,'Zaragoza','Zaragoza','Catedráticos de Universidad');
+
+SELECT * FROM tlfContactoProf WHERE idProfesor IN ('PR050','PR051');

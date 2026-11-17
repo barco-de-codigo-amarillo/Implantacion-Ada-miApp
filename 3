@@ -1,0 +1,2 @@
+UPDATE curso c
+SET nAsignaturas = (SELECT COUNT(*) FROM asignatura a WHERE a.idCurso = c.idCurso);

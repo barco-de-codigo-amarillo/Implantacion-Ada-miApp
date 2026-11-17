@@ -1,0 +1,6 @@
+CREATE OR REPLACE VIEW v_becados_con_suspensos AS
+SELECT DISTINCT a.idAlumno, a.nombre, a.apellido1
+FROM alumno a
+JOIN matricula m ON m.idAlumno = a.idAlumno
+WHERE a.beca = 'SI'
+  AND m.nota < 5;

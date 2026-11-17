@@ -1,0 +1,7 @@
+SELECT p.nombre, p.apellido1, p.apellido2, ROUND(AVG(m.nota), 2) AS nota_media
+FROM profesor p
+JOIN asignatura a ON a.coordinador = p.idProfesor
+JOIN matricula m ON m.idAsignatura = a.idAsignatura
+GROUP BY p.idProfesor, p.nombre, p.apellido1, p.apellido2
+ORDER BY AVG(m.nota) ASC
+LIMIT 3;
